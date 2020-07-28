@@ -10,6 +10,7 @@ using API.Models;
 using System.Data.SQLite;
 using Microsoft.Ajax.Utilities;
 
+
 namespace API.Controllers
 {
     [RoutePrefix("moviesapi")]
@@ -87,7 +88,7 @@ namespace API.Controllers
 
         [AcceptVerbs("GET")]
         [Route("genrecount")]
-        public String GenreCount(string token, int year, string genre)
+        public string GenreCount(string token, int year, string genre)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
