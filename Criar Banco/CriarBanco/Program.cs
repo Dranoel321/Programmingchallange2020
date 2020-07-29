@@ -11,7 +11,7 @@ namespace CriarBanco
     {
         private const bool SUCCESS = false;
         private const bool FAIL = true;
-        private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Programmingchallange2020\banco.db"; //Replace this value with the path that will be used in the database
+        private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Sidia\banco.db"; //Replace this value with the path that will be used in the database
         private static string moviesPath = @"C:\Users\Pichau\Desktop\ml-25m\movies.csv"; //Replace this value with the path to movies.csv
         private static string ratingsPath = @"C:\Users\Pichau\Desktop\ml-25m\ratings.csv"; //Replace this value with the path to ratings.csv
 
@@ -28,7 +28,7 @@ namespace CriarBanco
                 Environment.Exit(0);
             }
 
-            Console.WriteLine("Banco inicializado com sucesso!");
+            Console.WriteLine("Database successfully created!");
 
 
             if (createTables(con))
@@ -36,8 +36,7 @@ namespace CriarBanco
                 con.Close();
                 Environment.Exit(0);
             }
-            Console.WriteLine("Aguarde o processamento das notas...");
-            string line = "";
+            Console.WriteLine("Wait while the votes are being processed...");
 
             Dictionary<int, Tuple<double, int>> ratings = new Dictionary<int, Tuple<double, int>>();
 
@@ -83,11 +82,11 @@ namespace CriarBanco
             }
             catch
             {
-                Console.WriteLine("Falha ao criar tabela genres!");
+                Console.WriteLine("Failed to create table genres!");
                 return FAIL;
             }
 
-            Console.WriteLine("Tabela genres inicializada com sucesso!");
+            Console.WriteLine("Table genres successfully created!");
 
             cmd = new SQLiteCommand(con);
             //Create the table movies
@@ -96,6 +95,8 @@ namespace CriarBanco
                 "\"name\"  TEXT," +
                 "\"rating\"    REAL," +
                 "\"year\"  INTEGER," +
+                "\"genres\" TEXT, " +
+                "\"votes\" INTEGER, " +
                 "PRIMARY KEY(\"movieId\"))";
             try
             {
@@ -103,10 +104,10 @@ namespace CriarBanco
             }
             catch
             {
-                Console.WriteLine("Falha ao criar tabela movies!");
+                Console.WriteLine("Failed to create table movies!");
                 return FAIL;
             }
-            Console.WriteLine("Tabela movies inicializada com sucesso!");
+            Console.WriteLine("Table movies successfully created!");
             cmd.Dispose();
             return SUCCESS;
         }
@@ -146,8 +147,8 @@ namespace CriarBanco
             SQLiteTransaction transaction = con.BeginTransaction();
             string line = "";
             moviesFile.ReadLine();
-            Console.WriteLine("Notas processadas!");
-            Console.WriteLine("Aguarde o preenchimento das tabelas...");
+            Console.WriteLine("Votes were processed!");
+            Console.WriteLine("Wait while the tables are being filled...");
             int index = 0;
             while ((line = moviesFile.ReadLine()) != null)
             {
@@ -188,8 +189,8 @@ namespace CriarBanco
                 //Get all genres from that movie and insert into the genres table with the respective movieId
                 if (line[0] != '(')
                 {
-                    string[] genres = line.Split("|");
-                    foreach (string genre in genres)
+                    string[] listGenres = line.Split("|");
+                    foreach (string genre in listGenres)
                     {
                         cmd = new SQLiteCommand(con);
                         cmd.CommandText = String.Format("INSERT INTO genres(movieId, genre) VALUES({0}, \"{1}\")", movieId, genre);
@@ -197,22 +198,24 @@ namespace CriarBanco
                     }
                 }
                 cmd = new SQLiteCommand(con);
-
+                string genres = line.Replace("|", ", ");
                 //Insert the movie specs into the movies table
                 double meanRating = 0;
+                int votes = 0;
                 if (ratings.ContainsKey(movieId) && ratings[movieId].Item2 != 0)
                 {
+                    votes = ratings[movieId].Item2;
                     meanRating = (ratings[movieId].Item1 / ratings[movieId].Item2);
                 }
                 cmd = new SQLiteCommand(con);
-                cmd.CommandText = String.Format(CultureInfo.GetCultureInfo("en-CA"), "INSERT INTO movies(movieId, name, rating, year) VALUES({0}, \"{1}\", {2:0.00000000}, {3})",
-                                                                                    movieId, movie, meanRating, year);
+                cmd.CommandText = String.Format(CultureInfo.GetCultureInfo("en-CA"), "INSERT INTO movies(movieId, name, rating, year, genres, votes) VALUES({0}, " +
+                    "\"{1}\", {2:0.00000000}, {3}, \"{4}\", {5})",movieId, movie, meanRating, year, genres, votes);
                 cmd.ExecuteNonQuery();
                 index++;
             }
 
             transaction.Commit();
-            Console.WriteLine("Tabelas preenchidas com sucesso!");
+            Console.WriteLine("Tables successfully filled!");
             cmd.Dispose();
             moviesFile.Close();
             return SUCCESS;

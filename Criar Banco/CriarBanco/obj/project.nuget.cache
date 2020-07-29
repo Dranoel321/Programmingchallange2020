@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VLSoVyvADLt0usDMkx5Z6KMi7tiQdVvGwPV6UZ2yg2YbaiWgycJWdBfj+AIy1MHmBToATRVugl4U6tbHO3vuDQ==",
+  "dgSpecHash": "LJTSTOlRbJwgem/9keAIyuGOVx8FWxPL1WkPta47IkqkTjm52F7UMusym8WFPhEIUVFrLzqwN7qv0yT+URkP/A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Pichau\\source\\repos\\CriarBanco\\CriarBanco\\CriarBanco.csproj",
+  "projectFilePath": "C:\\Users\\Pichau\\Documents\\GitHub\\Sidia\\Criar Banco\\CriarBanco\\CriarBanco.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Pichau\\.nuget\\packages\\entityframework\\6.3.0\\entityframework.6.3.0.nupkg.sha512",
     "C:\\Users\\Pichau\\.nuget\\packages\\microsoft.csharp\\4.6.0\\microsoft.csharp.4.6.0.nupkg.sha512",

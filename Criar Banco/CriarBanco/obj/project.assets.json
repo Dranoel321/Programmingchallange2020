@@ -1237,11 +1237,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Pichau\\source\\repos\\CriarBanco\\CriarBanco\\CriarBanco.csproj",
+      "projectUniqueName": "C:\\Users\\Pichau\\Documents\\GitHub\\Sidia\\Criar Banco\\CriarBanco\\CriarBanco.csproj",
       "projectName": "CriarBanco",
-      "projectPath": "C:\\Users\\Pichau\\source\\repos\\CriarBanco\\CriarBanco\\CriarBanco.csproj",
+      "projectPath": "C:\\Users\\Pichau\\Documents\\GitHub\\Sidia\\Criar Banco\\CriarBanco\\CriarBanco.csproj",
       "packagesPath": "C:\\Users\\Pichau\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Pichau\\source\\repos\\CriarBanco\\CriarBanco\\obj\\",
+      "outputPath": "C:\\Users\\Pichau\\Documents\\GitHub\\Sidia\\Criar Banco\\CriarBanco\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Pichau\\AppData\\Roaming\\NuGet\\NuGet.Config",

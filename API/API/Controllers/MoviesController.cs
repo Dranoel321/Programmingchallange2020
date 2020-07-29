@@ -16,17 +16,17 @@ namespace API.Controllers
     [RoutePrefix("moviesapi")]
     public class MoviesController : ApiController
     {
-        private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Programmingchallange2020\banco.db"; //Replace this value with the path that will be used in the database
+        private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Sidia\banco.db"; //Replace this value with the path that will be used in the database
      
         [AcceptVerbs("GET")]
-        [Route("yearquery")]
-        public string QueryByYear(string token, int year, int offset)
+        [Route("v1/yearquery")]
+        public List<MovieModel> QueryByYear(int year, int offset)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
             List<MovieModel> movies = new List<MovieModel>();
             SQLiteCommand cmd = new SQLiteCommand(con);
-            cmd.CommandText = String.Format("SELECT name, genres, votes, rating, year FROM movies where year = {0} LIMIT {1}, 10", year, offset);
+            cmd.CommandText = String.Format("SELECT name, genres, votes, rating, year FROM movies where year = {0} ORDER BY name ASC LIMIT {1}, 10", year, offset);
             var selectReader = cmd.ExecuteReader();
             while(selectReader.Read())
             {
@@ -39,12 +39,12 @@ namespace API.Controllers
             con.Close();
             con.Dispose();
             cmd.Dispose();
-            return JsonSerializer.Serialize(movies);
+            return movies;
         }
 
         [AcceptVerbs("GET")]
-        [Route("yearcount")]
-        public string YearCount(string token, int year)
+        [Route("v1/yearcount")]
+        public int YearCount(int year)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
@@ -56,12 +56,12 @@ namespace API.Controllers
             con.Close();
             con.Dispose();
             cmd.Dispose();
-            return JsonSerializer.Serialize(elements);
+            return elements;
         }
 
         [AcceptVerbs("GET")]
-        [Route("genreyearquery")]
-        public string QueryByGenreAndYear(string token, int year, string genre, int offset)
+        [Route("v1/genreyearquery")]
+        public List<MovieModel> QueryByGenreAndYear(int year, string genre, int offset)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
@@ -79,16 +79,15 @@ namespace API.Controllers
                 double rating = double.Parse(selectReader["rating"].ToString());
                 movies.Add(new MovieModel(name, genres, votes, rating, year));
             }
-            System.Diagnostics.Debug.WriteLine(year);
             con.Close();
             con.Dispose();
             cmd.Dispose();
-            return JsonSerializer.Serialize(movies);
+            return movies;
         }
 
         [AcceptVerbs("GET")]
-        [Route("genrecount")]
-        public string GenreCount(string token, int year, string genre)
+        [Route("v1/genrecount")]
+        public int GenreCount(int year, string genre)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
@@ -101,17 +100,18 @@ namespace API.Controllers
             con.Close();
             con.Dispose();
             cmd.Dispose();
-            return JsonSerializer.Serialize(elements);
+            return elements;
         }
 
         [AcceptVerbs("GET")]
-        [Route("topkrating")]
-        public string GetKBestRatings(string token, int K)
+        [Route("v1/topkrating")]
+        public List<MovieModel> GetKBestRatings(int K, int offset)
         {
             SQLiteConnection con = new SQLiteConnection(databasePath);
             con.Open();
             SQLiteCommand cmd = new SQLiteCommand(con);
-            cmd.CommandText = String.Format("SELECT name, genres, votes, rating, year FROM movies ORDER BY rating DESC, votes DESC, name ASC LIMIT 0, 10");
+            int limit = Math.Min(K - offset, 10);
+            cmd.CommandText = String.Format("SELECT name, genres, votes, rating, year FROM movies ORDER BY rating DESC, votes DESC, name ASC LIMIT {0}, {1}", offset, limit);
             var selectReader = cmd.ExecuteReader();
             List<MovieModel> movies = new List<MovieModel>();
             while (selectReader.Read())
@@ -122,7 +122,7 @@ namespace API.Controllers
             con.Close();
             con.Dispose();
             cmd.Dispose();
-            return JsonSerializer.Serialize(movies);
+            return movies;
         }
     }
 }

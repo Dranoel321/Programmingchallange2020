@@ -1,13 +1,22 @@
-const URL = "https://192.168.0.48:44335";
-double defaultHeight = 712;
-double defaultWidth = 360;
-double defaultCHeight = 360;
-double defaultCWidth = 681;
-double appheight = 712;
-double appwidth = 360;
-double appcheight = 360;
-double appcwidth = 681;
+const URL =
+    "http://192.168.0.48:44335"; //Must be changed to the IP where the WebAPI is served
 
+//These are constants based on a given cellphone that was used to develop this application
+//The c-values are the useful area of the screen
+const double defaultHeight = 712;
+const double defaultWidth = 360;
+const double defaultCWidth = 681;
+const double defaultCHeight = 360;
+
+const double EPS = 1e-5;
+const int CARD_SIZE = 210;
+const int BUTTON_SIZE = 70;
+const TITLE_LIMIT = 45;
+
+double appheight = 712; //The height in pixels of the screen
+double appwidth = 360; //The width in pixels of the screen
+
+//The genres that were in the dataset
 const List<String> GENRES = [
   "Action",
   "Adventure",
@@ -29,19 +38,3 @@ const List<String> GENRES = [
   "War",
   "Western"
 ];
-
-getHeight(height) {
-  return (height / defaultHeight) * appheight;
-}
-
-getWidth(width) {
-  return (width / defaultWidth) * appwidth;
-}
-
-getCHeight(height) {
-  return (height / defaultCHeight) * appcheight;
-}
-
-getCWidth(width) {
-  return (width / defaultCWidth) * appcwidth;
-}
