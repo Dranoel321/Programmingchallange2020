@@ -1,3 +1,5 @@
+Check the wiki for more information on the responses, database structure and info about the app
+
 # Instructions
 
 ## Environment
