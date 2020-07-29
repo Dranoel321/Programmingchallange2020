@@ -1,3 +1,74 @@
+# Instructions
+
+## Environment
+
+Windows 10
+
+IDE:
+- Visual Studio 2019 16.6.5 (with Web Development Build Tools)
+- Visual Studio Code 1.47.3
+	- Extensions:
+		- C# 1.22.1
+		- C# Extensions 1.3.5
+		- Flutter 3.12.2
+		- Dart 3.12.2
+		- dart-import 0.2.0
+		- NuGet Package Manager 1.1.6
+- Android Studio 4.0.1
+
+
+Dependencies:
+- SQLite 3.32.3
+
+## Generate database
+1. Put the files movies.csv and ratings.csv
+2. Run the project CriaBanco by typing dotnet run in the CLI at the path CriaBanco/CriaBanco, it can take around 1 to 5 minutes to finish loading the data into the database
+
+## Run WebAPI
+1. Open the API/API.sln project in the Visual Studio 2019 IDE
+2. Create a Virtual Environment in the Project Web Settings
+3. Replace the databasePath in API/API/Controllers/MoviesController.cs with the path of the database
+4. Replace the binding configuration lines in API\.vs\API\config\applicationhost.config at the WebSite used for this application:
+```
+<binding protocol="http" bindingInformation="*:44335:*" />
+<binding protocol="http" bindingInformation="*:44335:localhost" />
+<binding protocol="http" bindingInformation="*:44335:hostip" />
+```
+where hostip is the IP in the network it is connected
+5. Run the project with IIS Express (May need admin privileges)
+6. The WebAPI can now be used with the client application
+
+## Client Application with Android Emulator
+1. Create an Android Emulator (The application was tested on Nexus 6 API 30)
+2. Change the URL in http_client_flutter/constants.dart to http://10.0.2.2:44335
+3. Run the application with F5
+
+## Client Application with mobile device
+1. Change the URL in http_client_flutter/constants.dart to http://hostip:44335 where hostip is the IP where the API is being hosted
+2. Ensure that the mobile phone and the server are on the same network
+3. Connect the phone and run the application with F5 (It will need to activate debugging mode in the mobile phone)
+
+
+
+# Resources used
+- Asp.Net Core: This framework was used to build the WebAPI. I didn't have used it before but as it had support to C# WebAPI programming, it wasn't very difficult to understand and use it.
+- Flutter: This framework was used to build the mobile device application, I had some experience with it in Web projects so it was the first option to use.
+- SQLite: This database provider was used because of the easiness to use and install so it was good for using in this application
+
+
+# Challenges and Decisions
+1. The biggest challenge on the database migration was that I made the parse manually to ensure the data was correct even if some lines on the dataset didn't follow any pattern, two decisions were essential at this step:
+- Creating a table with the genres only which in return made the queries by genre faster as the searchs were made on string properly not on substrings of the genres, the memory cost of this was very low as the concatenation of these genres were stored in the movies table.
+- Extracting the year information from the lines and storing it as values for the same reasons.
+- The mean ratings of the movies were calculated before migrating to database and this resulted in less and faster inserts.
+
+2. On the API side, the challenge was that I only programmed in C# once with Windows Phone devices, but I program a lot in C++ in my life and had already developed some APIs in Python so I learned fast. The other problem was that I didn't know that IIS Express is only setted for localhost by default so I had to set it manually to work with my application.
+
+3. On the client application, I chose to use Flutter as I had an experience with a previous project that worked in a similar way, this way I could enhance more time on enhancing the interface. It is also worth saying that the language used in Flutter, Dart, is kinda similar to C++.
+
+# Final Considerations
+I was very pleased with the opportunity of participating in the challenge as I could improve a lot my skills in web development. I was satisfied with the results and with the low latency although I wish to improve more at wrapping the classes especially when programming in Flutter as the language is very verbose (although very modular) as not doing it could harm the readability of the code.
+
 # Programming Challenge
 
 Congratulations on being selected to participate in our technical test. It consists of a programming challenge and it will address different skills. Read the instructions carefully and we wish you the best of luck.

@@ -9,15 +9,15 @@ using System.Text.Json.Serialization;
 using API.Models;
 using System.Data.SQLite;
 using Microsoft.Ajax.Utilities;
-
+using System.IO;
 
 namespace API.Controllers
 {
     [RoutePrefix("moviesapi")]
     public class MoviesController : ApiController
     {
+        private static string path = Directory.GetCurrentDirectory();
         private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Sidia\banco.db"; //Replace this value with the path that will be used in the database
-     
         [AcceptVerbs("GET")]
         [Route("v1/yearquery")]
         public List<MovieModel> QueryByYear(int year, int offset)

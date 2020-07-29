@@ -134,7 +134,6 @@ class _MainScreenState extends State<MainScreen> {
     yearMovies["offset"] = offset[0];
     yearMovies["total"] = total;
     yearMovies["data"] = json.decode(response.body);
-    print(yearMovies);
     return yearMovies;
   }
 
@@ -175,7 +174,6 @@ class _MainScreenState extends State<MainScreen> {
     genreyearMovies["offset"] = offset[1];
     genreyearMovies["total"] = total;
     genreyearMovies["data"] = json.decode(response.body);
-    print(genreyearMovies);
     return genreyearMovies;
   }
 
@@ -212,7 +210,6 @@ class _MainScreenState extends State<MainScreen> {
     topKMovies["offset"] = offset[2];
     topKMovies["total"] = int.parse(kValueController.text);
     topKMovies["data"] = json.decode(response.body);
-    print(topKMovies);
     return topKMovies;
   }
 

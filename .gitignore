@@ -1,3 +1,5 @@
 banco.db
 banco.db-journal
-C:\Users\Pichau\Documents\GitHub\Sidia\http_client_flutter\build
+http_client_flutter/build
+dataset/ratings.csv
+dataset/movies.csv

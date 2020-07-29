@@ -1,5 +1,8 @@
-const URL =
+/*const URL =
     "http://192.168.0.48:44335"; //Must be changed to the IP where the WebAPI is served
+*/
+
+const URL = "http://10.0.2.2:44335"; //IP for Android Emulator
 
 //These are constants based on a given cellphone that was used to develop this application
 //The c-values are the useful area of the screen

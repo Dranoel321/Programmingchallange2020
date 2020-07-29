@@ -3,20 +3,27 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Data.SQLite;
+using System.Drawing.Printing;
 using System.Globalization;
+using System.IO;
 
 namespace CriarBanco
 {
     class Program
     {
+        private static string path = Directory.GetCurrentDirectory();
         private const bool SUCCESS = false;
         private const bool FAIL = true;
-        private static string databasePath = @"URI=file:C:\Users\Pichau\Documents\GitHub\Sidia\banco.db"; //Replace this value with the path that will be used in the database
-        private static string moviesPath = @"C:\Users\Pichau\Desktop\ml-25m\movies.csv"; //Replace this value with the path to movies.csv
-        private static string ratingsPath = @"C:\Users\Pichau\Desktop\ml-25m\ratings.csv"; //Replace this value with the path to ratings.csv
+        private static string databasePath = "";
+        private static string moviesPath = "";
+        private static string ratingsPath = "";
 
         static void Main(string[] args)
         {
+            path = path.Replace(@"Criar Banco\CriarBanco", "");
+            databasePath = "URI=file:" + path + "banco.db"; //Replace this value with the path that will be used in the database
+            moviesPath = path + @"dataset\movies.csv"; //Replace this value with the path to movies.csv
+            ratingsPath = path + @"dataset\ratings.csv"; //Replace this value with the path to ratings.csv
             SQLiteConnection con = new SQLiteConnection(databasePath);
             try
             {
@@ -74,7 +81,7 @@ namespace CriarBanco
 
                     "\"genreId\"   INTEGER," +
                     "\"movieId\"   INTEGER," +
-                    "\"genre\" INTEGER," +
+                    "\"genre\" TEXT," +
                     "PRIMARY KEY(\"genreId\" AUTOINCREMENT))";
             try
             {

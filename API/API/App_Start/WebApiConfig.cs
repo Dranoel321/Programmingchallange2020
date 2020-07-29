@@ -21,7 +21,7 @@ namespace API
             );
 
             var appXmlType = config.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(t => t.MediaType == "application/xml");
-            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType);
+            config.Formatters.XmlFormatter.SupportedMediaTypes.Remove(appXmlType); //This configuration is used to return the data in the Json Format
         }
     }
 }
