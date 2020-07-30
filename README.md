@@ -37,6 +37,7 @@ Dependencies:
 <binding protocol="http" bindingInformation="*:44335:hostip" />
 ```
 where hostip is the IP in the network it is connected
+
 5. Run the project with IIS Express (May need admin privileges)
 6. The WebAPI can now be used with the client application
 
@@ -49,6 +50,7 @@ where hostip is the IP in the network it is connected
 1. Change the URL in http_client_flutter/constants.dart to http://hostip:44335 where hostip is the IP where the API is being hosted
 2. Ensure that the mobile phone and the server are on the same network
 3. Connect the phone and run the application with F5 (It will need to activate debugging mode in the mobile phone)
+It was tested on Xiaomi Mi A2 Lite and Motorola Moto G6
 
 
 
